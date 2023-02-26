@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>ESP32 and Mobile App WITH MYSQL DATABASE</title>
+    <title>ESP32 WITH MYSQL DATABASE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       html {font-family: Arial; display: inline-block; text-align: center;}
@@ -101,12 +101,12 @@
   
   <body>
     <div class="topnav">
-      <h3>ESP32 and Mobile App WITH MYSQL DATABASE</h3>
+      <h3>ESP32 WITH MYSQL DATABASE</h3>
     </div>
     
     <br>
     
-    <h3 style="color: #0c6980;">OVERALL RECORD DATA TABLE</h3>
+    <h3 style="color: #0c6980;">MOBILE APP RECORD DATA TABLE</h3>
     
     <table class="styled-table" id= "table_id">
       <thead>
@@ -133,7 +133,7 @@
           // This table is used to store and record DHT11 sensor data updated by ESP32. 
           // This table is also used to store and record the state of the LEDs, the state of the LEDs is controlled from the "home.php" page. 
           // To store data, this table is operated with the "INSERT" command, so this table will contain many rows.
-          $sql = 'SELECT * FROM esp32_table_dht11_leds_record ORDER BY date, time';
+          $sql = 'SELECT * FROM esp32_table_dht11_leds_record WHERE board = "MobileApp" ORDER BY date, time';
           foreach ($pdo->query($sql) as $row) {
             $date = date_create($row['date']);
             $dateFormat = date_format($date,"d-m-Y");

@@ -112,7 +112,7 @@
         <!-- == MONITORING ======================================================================================== -->
         <div class="card">
           <div class="card header">
-            <h3 style="font-size: 1rem;">MONITORING</h3>
+            <h3 style="font-size: 1rem;">ESP32 MONITORING</h3>
           </div>
           
           <!-- Displays the humidity and temperature values received from ESP32. *** -->
@@ -123,6 +123,21 @@
           <!-- *********************************************************************** -->
           
           <p class="statusreadColor"><span>Status Read Sensor DHT11 : </span><span id="ESP32_01_Status_Read_DHT11"></span></p>
+        </div>
+
+        <div class="card">
+          <div class="card header">
+            <h3 style="font-size: 1rem;">Mobile APP MONITORING</h3>
+          </div>
+          
+          <!-- Displays the humidity and temperature values received from ESP32. *** -->
+          <h4 class="temperatureColor"><i class="fas fa-thermometer-half"></i> TEMPERATURE</h4>
+          <p class="temperatureColor"><span class="reading"><span id="MOBILE_APP_Temp"></span> &deg;C</span></p>
+          <h4 class="humidityColor"><i class="fas fa-tint"></i> HUMIDITY</h4>
+          <p class="humidityColor"><span class="reading"><span id="MOBILE_APP_Humd"></span> &percnt;</span></p>
+          <!-- *********************************************************************** -->
+          
+          <p class="statusreadColor"><span>Status Read Sensor DHT11 : </span><span id="MOBILE_APP_Status_Read_DHT11"></span></p>
         </div>
         <!-- ======================================================================================================= -->
         
@@ -161,6 +176,26 @@
         </div>
       </div>
     </div>
+
+    <div class="content">
+      <div class="cards">
+        <div class="card header" style="border-radius: 15px;">
+            <h3 style="font-size: 0.7rem;">LAST TIME RECEIVED DATA FROM ESP32 [ <span id="MOBILE_APP_LTRD"></span> ]</h3>
+            <button onclick="window.open('recordtable2.php', '_blank');">Open ESP32 Record Table</button>
+            <h3 style="font-size: 0.7rem;"></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="cards">
+        <div class="card header" style="border-radius: 15px;">
+            <h3 style="font-size: 0.7rem;">LAST TIME RECEIVED DATA FROM Mobile App [ <span id="MOBILE_APP_LTRD"></span> ]</h3>
+            <button onclick="window.open('recordtable3.php', '_blank');">Open Mobile App Record Table</button>
+            <h3 style="font-size: 0.7rem;"></h3>
+        </div>
+      </div>
+    </div>
     <!-- ___________________________________________________________________________________________________________________________________ -->
     
     <script>
@@ -169,15 +204,22 @@
       document.getElementById("ESP32_01_Humd").innerHTML = "NN";
       document.getElementById("ESP32_01_Status_Read_DHT11").innerHTML = "NN";
       document.getElementById("ESP32_01_LTRD").innerHTML = "NN";
+
+      document.getElementById("MOBILE_APP_Temp").innerHTML = "NN"; 
+      document.getElementById("MOBILE_APP_Humd").innerHTML = "NN";
+      document.getElementById("MOBILE_APP_Status_Read_DHT11").innerHTML = "NN";
+      document.getElementById("MOBILE_APP_LTRD").innerHTML = "NN";
       //------------------------------------------------------------
       
       Get_Data("esp32_01");
+      Get_Data("MobileApp");
       
       setInterval(myTimer, 5000);
       
       //------------------------------------------------------------
       function myTimer() {
         Get_Data("esp32_01");
+        Get_Data("MobileApp");
       }
       //------------------------------------------------------------
       
@@ -198,6 +240,23 @@
               document.getElementById("ESP32_01_Humd").innerHTML = myObj.humidity;
               document.getElementById("ESP32_01_Status_Read_DHT11").innerHTML = myObj.status_read_sensor_dht11;
               document.getElementById("ESP32_01_LTRD").innerHTML = "Time : " + myObj.ls_time + " | Date : " + myObj.ls_date + " (dd-mm-yyyy)";
+              if (myObj.LED_01 == "ON") {
+                document.getElementById("ESP32_01_TogLED_01").checked = true;
+              } else if (myObj.LED_01 == "OFF") {
+                document.getElementById("ESP32_01_TogLED_01").checked = false;
+              }
+              if (myObj.LED_02 == "ON") {
+                document.getElementById("ESP32_01_TogLED_02").checked = true;
+              } else if (myObj.LED_02 == "OFF") {
+                document.getElementById("ESP32_01_TogLED_02").checked = false;
+              }
+            }
+
+            else if (myObj.id == "MobileApp") {
+              document.getElementById("MOBILE_APP_Temp").innerHTML = myObj.temperature;
+              document.getElementById("MOBILE_APP_Humd").innerHTML = myObj.humidity;
+              document.getElementById("MOBILE_APP_Status_Read_DHT11").innerHTML = myObj.status_read_sensor_dht11;
+              document.getElementById("MOBILE_APP_LTRD").innerHTML = "Time : " + myObj.ls_time + " | Date : " + myObj.ls_date + " (dd-mm-yyyy)";
               if (myObj.LED_01 == "ON") {
                 document.getElementById("ESP32_01_TogLED_01").checked = true;
               } else if (myObj.LED_01 == "OFF") {
