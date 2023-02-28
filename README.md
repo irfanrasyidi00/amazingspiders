@@ -1,5 +1,5 @@
 # ====================
-# SW-Eng-Django-Asssignment
+# SW-Eng-Asssignment
 # ====================
 
 Group: Amazing Spiders
